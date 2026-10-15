@@ -99,4 +99,43 @@ const supabase = window.supabase.createClient(
 );
   </script>
 </body>
+  <div id="auth-box">
+  <h2>تسجيل الدخول / إنشاء حساب</h2>
+
+  <input id="email" type="email" placeholder="البريد الإلكتروني">
+  <input id="password" type="password" placeholder="كلمة المرور">
+
+  <button onclick="signUp()">إنشاء حساب</button>
+  <button onclick="signIn()">تسجيل الدخول</button>
+
+  <p id="auth-message"></p>
+</div>
+
+<script>
+async function signUp() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  document.getElementById("auth-message").textContent =
+    error ? error.message : "تم إنشاء الحساب بنجاح!";
+}
+
+async function signIn() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  document.getElementById("auth-message").textContent =
+    error ? error.message : "تم تسجيل الدخول بنجاح!";
+}
+</script>
   </html>
