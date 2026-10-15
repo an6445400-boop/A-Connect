@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موقعي الاجتماعي</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      text-align: center;
+    }
+    header {
+      background: #1877f2;
+      color: white;
+      padding: 20px;
+    }
+    .box {
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 400px;
+      border-radius: 12px;
+    }
+    input, textarea, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background: #1877f2;
+      color: white;
+      border: none;
+    }
+    .post {
+      background: #fff;
+      padding: 15px;
+      margin: 12px auto;
+      max-width: 400px;
+      border-radius: 10px;
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌐 موقعي الاجتماعي</h1>
+    <p>شارك أفكارك مع الجميع</p>
+  </header>
+
+  <div class="box">
+    <h2>✍️ اكتب منشورك</h2>
+    <input id="username" placeholder="اكتب اسمك">
+    <textarea id="message" placeholder="بماذا تفكر؟"></textarea>
+    <button onclick="addPost()">نشر المنشور</button>
+  </div>
+
+  <h2>📰 المنشورات</h2>
+  <div id="posts"></div>
+
+  <script>
+    function addPost() {
+      const name = document.getElementById('username').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !message) {
+        alert('اكتب اسمك والمنشور أولاً');
+        return;
+      }
+
+      const post = document.createElement('div');
+      post.className = 'post';
+
+      const title = document.createElement('h3');
+      title.textContent = '👤 ' + name;
+
+      const content = document.createElement('p');
+      content.textContent = message;
+
+      post.append(title, content);
+      document.getElementById('posts').prepend(post);
+
+      document.getElementById('message').value = '';
+    }
+  </script>
+</body>
+  </html>
