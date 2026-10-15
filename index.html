@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>موقعي الاجتماعي</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,11 +13,13 @@
       margin: 0;
       text-align: center;
     }
+
     header {
       background: #1877f2;
       color: white;
       padding: 20px;
     }
+
     .box {
       background: white;
       margin: 20px auto;
@@ -23,6 +27,7 @@
       max-width: 400px;
       border-radius: 12px;
     }
+
     input, textarea, button {
       box-sizing: border-box;
       width: 100%;
@@ -32,141 +37,223 @@
       border: 1px solid #ccc;
       font-size: 16px;
     }
+
     button {
       background: #1877f2;
       color: white;
       border: none;
+      cursor: pointer;
     }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
     .post {
-      background: #fff;
+      background: white;
       padding: 15px;
       margin: 12px auto;
       max-width: 400px;
       border-radius: 10px;
       overflow-wrap: anywhere;
     }
+
+    #auth-message {
+      font-weight: bold;
+      margin-top: 10px;
+    }
   </style>
+
+  <!-- Supabase مرة واحدة فقط -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-const SUPABASE_URL = "https://duntovpgnwgybfjpkokg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_lxDs36c0xiA_3hQttMRl4A_v9f2xS8x";
-
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-</script>
 </head>
-  <script>
-async function signUp() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
 
-  if (!email || !password) {
-    document.getElementById("auth-message").textContent =
-      "اكتب البريد الإلكتروني وكلمة المرور أولًا";
-    return;
-  }
-
-  const { error } = await supabase.auth.signUp({
-    email: email,
-    password: password
-  });
-
-  document.getElementById("auth-message").textContent =
-    error ? error.message : "تم إنشاء الحساب بنجاح 🎉";
-}
-  </script>
 <body>
+
   <header>
     <h1>🌐 موقعي الاجتماعي</h1>
     <p>شارك أفكارك مع الجميع</p>
   </header>
 
+  <!-- تسجيل الحساب -->
+  <div class="box">
+    <h2>🔐 تسجيل الدخول / إنشاء حساب</h2>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="البريد الإلكتروني"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="كلمة المرور"
+    >
+
+    <button onclick="signUp()">إنشاء حساب</button>
+    <button onclick="signIn()">تسجيل الدخول</button>
+
+    <p id="auth-message"></p>
+  </div>
+
+  <!-- إنشاء منشور -->
   <div class="box">
     <h2>✍️ اكتب منشورك</h2>
-    <input id="username" placeholder="اكتب اسمك">
-    <textarea id="message" placeholder="بماذا تفكر؟"></textarea>
+
+    <input
+      id="username"
+      placeholder="اكتب اسمك"
+    >
+
+    <textarea
+      id="message"
+      placeholder="بماذا تفكر؟"
+    ></textarea>
+
     <button onclick="addPost()">نشر المنشور</button>
   </div>
 
   <h2>📰 المنشورات</h2>
+
   <div id="posts"></div>
 
   <script>
-    function addPost() {
-      const name = document.getElementById('username').value.trim();
-      const message = document.getElementById('message').value.trim();
+    // بيانات Supabase
+    const SUPABASE_URL =
+      "https://duntovpgnwgybfjpkokg.supabase.co";
 
-      if (!name || !message) {
-        alert('اكتب اسمك والمنشور أولاً');
+    const SUPABASE_KEY =
+      "sb_publishable_lxDs36c0xiA_3hQttMRl4A_v9f2xS8x";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    // إنشاء حساب
+    async function signUp() {
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const message =
+        document.getElementById("auth-message");
+
+
+      if (!email || !password) {
+        message.textContent =
+          "اكتب البريد الإلكتروني وكلمة المرور أولًا";
         return;
       }
 
-      const post = document.createElement('div');
-      post.className = 'post';
 
-      const title = document.createElement('h3');
-      title.textContent = '👤 ' + name;
+      const { error } =
+        await supabaseClient.auth.signUp({
+          email: email,
+          password: password
+        });
 
-      const content = document.createElement('p');
-      content.textContent = message;
+
+      if (error) {
+        message.textContent =
+          "❌ " + error.message;
+      } else {
+        message.textContent =
+          "✅ تم إنشاء الحساب بنجاح!";
+      }
+    }
+
+
+    // تسجيل الدخول
+    async function signIn() {
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const message =
+        document.getElementById("auth-message");
+
+
+      if (!email || !password) {
+        message.textContent =
+          "اكتب البريد الإلكتروني وكلمة المرور أولًا";
+        return;
+      }
+
+
+      const { error } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+
+      if (error) {
+        message.textContent =
+          "❌ " + error.message;
+      } else {
+        message.textContent =
+          "✅ تم تسجيل الدخول بنجاح!";
+      }
+    }
+
+
+    // نشر منشور على الصفحة
+    function addPost() {
+
+      const name =
+        document.getElementById("username").value.trim();
+
+      const message =
+        document.getElementById("message").value.trim();
+
+
+      if (!name || !message) {
+        alert("اكتب اسمك والمنشور أولًا");
+        return;
+      }
+
+
+      const post =
+        document.createElement("div");
+
+      post.className = "post";
+
+
+      const title =
+        document.createElement("h3");
+
+      title.textContent =
+        "👤 " + name;
+
+
+      const content =
+        document.createElement("p");
+
+      content.textContent =
+        message;
+
 
       post.append(title, content);
-      document.getElementById('posts').prepend(post);
 
-      document.getElementById('message').value = '';
+
+      document
+        .getElementById("posts")
+        .prepend(post);
+
+
+      document.getElementById("message").value = "";
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-const SUPABASE_URL = "https://duntovpgnwgybfjpkokg.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_lxDs36c0xiA_3hQttMRl4A_v9f2xS8x";
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-  </script>
 </body>
-  <div id="auth-box">
-  <h2>تسجيل الدخول / إنشاء حساب</h2>
-
-  <input id="email" type="email" placeholder="البريد الإلكتروني">
-  <input id="password" type="password" placeholder="كلمة المرور">
-
-  <button onclick="signUp()">إنشاء حساب</button>
-  <button onclick="signIn()">تسجيل الدخول</button>
-
-  <p id="auth-message"></p>
-</div>
-
-<script>
-async function signUp() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  const { error } = await supabase.auth.signUp({
-    email: email,
-    password: password
-  });
-
-  document.getElementById("auth-message").textContent =
-    error ? error.message : "تم إنشاء الحساب بنجاح!";
-}
-
-async function signIn() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
-
-  document.getElementById("auth-message").textContent =
-    error ? error.message : "تم تسجيل الدخول بنجاح!";
-}
-</script>
-  </html>
+</html>
