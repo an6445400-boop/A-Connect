@@ -58,6 +58,26 @@ const supabase = window.supabase.createClient(
 );
 </script>
 </head>
+  <script>
+async function signUp() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    document.getElementById("auth-message").textContent =
+      "اكتب البريد الإلكتروني وكلمة المرور أولًا";
+    return;
+  }
+
+  const { error } = await supabase.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  document.getElementById("auth-message").textContent =
+    error ? error.message : "تم إنشاء الحساب بنجاح 🎉";
+}
+  </script>
 <body>
   <header>
     <h1>🌐 موقعي الاجتماعي</h1>
