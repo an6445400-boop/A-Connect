@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>إلى أحمد مجدي ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Tahoma,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at top,#35115c,#11001f 45%,#050008);
+  color:white;
+  text-align:center;
+}
+
+/* النجوم */
+.stars{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+.star{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:.2;transform:scale(.7)}
+  to{opacity:1;transform:scale(1.5)}
+}
+
+/* المحتوى */
+.container{
+  position:relative;
+  z-index:2;
+  width:min(900px,92%);
+  margin:auto;
+  padding:45px 15px;
+}
+
+/* العنوان */
+.badge{
+  display:inline-block;
+  padding:10px 20px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:50px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+h1{
+  font-size:clamp(42px,10vw,82px);
+  margin-bottom:10px;
+  background:linear-gradient(90deg,#fff,#ff6bcf,#ff1744,#fff);
+  background-size:300%;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:gradient 5s linear infinite;
+}
+
+@keyframes gradient{
+  0%{background-position:0%}
+  100%{background-position:300%}
+}
+
+.subtitle{
+  color:#ddd;
+  font-size:18px;
+  line-height:1.8;
+}
+
+/* القلب */
+.heart-area{
+  height:380px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  margin:20px 0;
+}
+
+.heart{
+  position:relative;
+  width:190px;
+  height:170px;
+  transform:rotate(-45deg) scale(0);
+  opacity:0;
+  background:#ff1744;
+  filter:drop-shadow(0 0 25px #ff1744);
+}
+
+.heart:before,
+.heart:after{
+  content:"";
+  position:absolute;
+  width:190px;
+  height:170px;
+  border-radius:50%;
+  background:#ff1744;
+}
+
+.heart:before{
+  top:-95px;
+  left:0;
+}
+
+.heart:after{
+  left:95px;
+  top:0;
+}
+
+.heart.show{
+  animation:heartBuild 2.8s cubic-bezier(.17,.89,.32,1.28) forwards;
+}
+
+@keyframes heartBuild{
+  0%{
+    transform:rotate(-45deg) scale(0);
+    opacity:0;
+  }
+  60%{
+    transform:rotate(-45deg) scale(1.15);
+    opacity:1;
+  }
+  100%{
+    transform:rotate(-45deg) scale(1);
+    opacity:1;
+  }
+}
+
+.heart-text{
+  position:absolute;
+  z-index:5;
+  font-size:30px;
+  font-weight:bold;
+  opacity:0;
+  text-shadow:0 0 15px #fff;
+  transition:1s;
+}
+
+.heart-text.show{
+  opacity:1;
+}
+
+/* البطاقات */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:18px;
+  margin-top:20px;
+}
+
+.card{
+  padding:25px 18px;
+  border-radius:25px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(15px);
+  transition:.35s;
+  cursor:pointer;
+}
+
+.card:hover{
+  transform:translateY(-8px) scale(1.03);
+  background:rgba(255,255,255,.13);
+}
+
+.icon{
+  font-size:45px;
+  margin-bottom:12px;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.card p{
+  color:#ccc;
+  line-height:1.7;
+  font-size:14px;
+}
+
+/* الزر */
+button{
+  margin-top:35px;
+  border:0;
+  padding:17px 35px;
+  border-radius:50px;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ff1744,#b000ff);
+  box-shadow:0 0 30px rgba(255,23,68,.4);
+  transition:.3s;
+}
+
+button:hover{
+  transform:scale(1.08);
+}
+
+/* الرسالة */
+.message{
+  max-height:0;
+  overflow:hidden;
+  transition:1s;
+}
+
+.message.open{
+  max-height:300px;
+  margin-top:25px;
+}
+
+.message-box{
+  padding:25px;
+  border-radius:25px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  line-height:2;
+  color:#eee;
+}
+
+/* قلوب طائرة */
+.floating-heart{
+  position:fixed;
+  bottom:-40px;
+  font-size:25px;
+  pointer-events:none;
+  animation:fly 5s linear forwards;
+  z-index:10;
+}
+
+@keyframes fly{
+  0%{
+    transform:translateY(0) scale(.5);
+    opacity:0;
+  }
+  15%{opacity:1}
+  100%{
+    transform:translateY(-110vh) rotate(360deg) scale(1.5);
+    opacity:0;
+  }
+}
+
+footer{
+  margin-top:45px;
+  color:#888;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+  <div class="badge">✨ رسالة خاصة جدًا ✨</div>
+
+  <h1>أحمد مجدي ❤️</h1>
+
+  <p class="subtitle">
+    مش كل الناس مجرد أصحاب...<br>
+    في ناس وجودها لوحده بيخلي الدنيا أحلى.
+  </p>
+
+  <div class="heart-area">
+    <div class="heart" id="heart"></div>
+    <div class="heart-text" id="heartText">
+      I ❤️ YOU
+    </div>
+  </div>
+
+  <div class="cards">
+
+    <div class="card" onclick="showMessage('friend')">
+      <div class="icon">🤝</div>
+      <h3>صاحب بجد</h3>
+      <p>الصاحب الحقيقي هو اللي تلاقيه وقت الجد قبل وقت الفرح.</p>
+    </div>
+
+    <div class="card" onclick="showMessage('laugh')">
+      <div class="icon">😂</div>
+      <h3>الضحكة</h3>
+      <p>معاك حتى أبسط المواقف ممكن تتحول لأحلى ذكريات.</p>
+    </div>
+
+    <div class="card" onclick="showMessage('memory')">
+      <div class="icon">✨</div>
+      <h3>الذكريات</h3>
+      <p>أحلى الذكريات هي اللي بنعيشها مع ناس غالية علينا.</p>
+    </div>
+
+    <div class="card" onclick="showMessage('respect')">
+      <div class="icon">👑</div>
+      <h3>تستاهل كل خير</h3>
+      <p>دايمًا خليك زي ما أنت، لأنك شخص يستاهل التقدير.</p>
+    </div>
+
+  </div>
+
+  <button onclick="openMessage()">
+    💌 افتح الرسالة
+  </button>
+
+  <div class="message" id="message">
+    <div class="message-box" id="messageBox">
+      يا أحمد مجدي ❤️<br><br>
+      يمكن الكلام مش دايمًا بيعرف يوصف قيمة الناس،
+      بس حبيت أقولك إنك من الناس اللي وجودهم في الحياة له معنى.
+      <br><br>
+      ربنا يديم بينا الصحوبية والضحك والذكريات الحلوة،
+      ويفضل بينا دايمًا كل خير ومحبة 🤍
+      <br><br>
+      <b>إنت مش مجرد صاحب... إنت أخ ❤️</b>
+    </div>
+  </div>
+
+  <footer>
+    صُنع بكل محبة لأحمد مجدي ❤️
+  </footer>
+
+</div>
+
+<script>
+
+/* النجوم */
+const stars = document.getElementById("stars");
+
+for(let i=0;i<100;i++){
+  const star=document.createElement("div");
+  star.className="star";
+
+  star.style.left=Math.random()*100+"%";
+  star.style.top=Math.random()*100+"%";
+  star.style.animationDelay=Math.random()*2+"s";
+
+  stars.appendChild(star);
+}
+
+/* تكوين القلب بعد تحميل الصفحة */
+window.onload=()=>{
+  setTimeout(()=>{
+    document.getElementById("heart").classList.add("show");
+
+    setTimeout(()=>{
+      document.getElementById("heartText").classList.add("show");
+      createHearts();
+    },1800);
+
+  },700);
+};
+
+/* الرسالة */
+function openMessage(){
+  document.getElementById("message").classList.toggle("open");
+  createHearts();
+}
+
+/* رسائل البطاقات */
+function showMessage(type){
+
+  const box=document.getElementById("messageBox");
+
+  const messages={
+
+    friend:
+    "يا أحمد، الصحوبية الحقيقية مش بالكلام... الصحوبية بالمواقف والوقوف جنب بعض وقت الحاجة 🤝❤️",
+
+    laugh:
+    "أحلى حاجة إنك تقدر تضحك مع صاحبك من قلبك حتى على حاجات ملهاش أي لازمة 😂❤️",
+
+    memory:
+    "كل لحظة حلوة بتعدي بين الصحاب بتتحول بعد كده لذكرى غالية ✨",
+
+    respect:
+    "خليك دايمًا واثق من نفسك، واعرف إنك تستاهل كل خير يا أحمد 👑❤️"
+
+  };
+
+  box.innerHTML=messages[type];
+
+  document.getElementById("message").classList.add("open");
+
+  createHearts();
+}
+
+/* القلوب الطائرة */
+function createHearts(){
+
+  for(let i=0;i<12;i++){
+
+    const h=document.createElement("div");
+
+    h.className="floating-heart";
+
+    const icons=["❤️","💖","💗","💜","✨","🤍"];
+
+    h.innerHTML=icons[Math.floor(Math.random()*icons.length)];
+
+    h.style.left=Math.random()*100+"%";
+    h.style.animationDuration=(3+Math.random()*3)+"s";
+
+    document.body.appendChild(h);
+
+    setTimeout(()=>{
+      h.remove();
+    },6000);
+  }
+}
+
+</script>
+
+</body>
+</html>
